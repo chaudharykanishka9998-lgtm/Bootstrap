@@ -1,0 +1,31 @@
+
+    body {
+      background-color: #f8f9fa;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Fixed height layout for desktop two-pane view */
+    @media (min-width: 768px) {
+      .console-container {
+        height: calc(100vh - 56px);
+        overflow: hidden;
+      }
+      .scrollable-panel {
+        height: 100%;
+        overflow-y: auto;
+      }
+      .left-pane {
+        border-right: 1px solid #dee2e6;
+      }
+    }
+    /* Skeleton Loading Animation */
+    .skeleton {
+      background: linear-gradient(90deg, #e9ecef 25%, #f8f9fa 50%, #e9ecef 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }

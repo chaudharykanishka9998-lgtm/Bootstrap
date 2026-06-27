@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="project 3.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+  <!-- Top Navbar -->
+  <nav class="navbar navbar-dark bg-dark px-3 shadow-sm">
+    <span class="navbar-brand mb-0 h1"><i class="bi bi-layers-half me-2"></i>DeskFlow</span>
+    <span class="badge bg-secondary">Agent Console</span>
+  </nav>
+
+  <!-- Main Console Wrapper -->
+  <div class="container-fluid console-container">
+    <div class="row h-100">
+      
+      <!-- LEFT PANE: Ticket Queue & Filters -->
+      <div class="col-12 col-md-4 p-3 bg-white left-pane d-flex flex-column h-100 scrollable-panel">
+        
+        <!-- Filter Bar -->
+        <div class="mb-3">
+          <div class="row g-2">
+            <div class="col-5">
+              <select class="form-select form-select-sm" id="statusFilter" aria-label="Filter by status">
+                <option value="all">All Status</option>
+                <option value="open">Open</option>
+                <option value="pending">Pending</option>
+                <option value="closed">Closed</option>
+              </select>
+            </div>
+            <div class="col-7">
+              <div class="input-group input-group-sm">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" class="form-control" id="searchBar" placeholder="Search tickets...">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skeleton Rows (Hidden by default via JS after load, simulated here) -->
+        <div id="skeletonLoader" class="d-none">
+          <div class="list-group">
+            <div class="list-group-item p-3 mb-2 border rounded shadow-sm">
+              <div class="skeleton mb-2" style="height: 16px; width: 60%;"></div>
+              <div class="skeleton mb-2" style="height: 12px; width: 40%;"></div>
+              <div class="skeleton" style="height: 12px; width: 85%;"></div>
+            </div>
+            <div class="list-group-item p-3 mb-2 border rounded shadow-sm">
+              <div class="skeleton mb-2" style="height: 16px; width: 50%;"></div>
+              <div class="skeleton mb-2" style="height: 12px; width: 30%;"></div>
+              <div class="skeleton" style="height: 12px; width: 75%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ticket Queue List -->
+        <div class="list-group overflow-auto flex-grow-1" id="ticketQueue" role="tablist">
+          
+          <!-- Ticket Item 1 -->
+          <button class="list-group-item list-group-item-action p-3 mb-2 border rounded shadow-sm active" 
+                  id="ticket1-tab" data-bs-toggle="pill" data-bs-target="#ticket1" type="button" role="tab" aria-selected="true"
+                  data-status="open" data-search="login issue password error failed">
+            <div class="d-flex w-100 justify-between align-items-center mb-1">
+              <h6 class="mb-0 fw-bold text-truncate me-2">Login issues on main dashboard</h6>
+              <span class="badge bg-danger">High</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <small class="text-muted text-truncate">From: john.doe@email.com</small>
+              <span class="badge bg-primary rounded-pill">3</span>
+            </div>
+          </button>
+
+          <!-- Ticket Item 2 -->
+          <button class="list-group-item list-group-item-action p-3 mb-2 border rounded shadow-sm" 
+                  id="ticket2-tab" data-bs-toggle="pill" data-bs-target="#ticket2" type="button" role="tab" aria-selected="false"
+                  data-status="pending" data-search="billing invoice refund payment request">
+            <div class="d-flex w-100 justify-between align-items-center mb-1">
+              <h6 class="mb-0 fw-bold text-truncate me-2">Billing discrepancy / Invoice refund</h6>
+              <span class="badge bg-warning text-dark">Medium</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <small class="text-muted text-truncate">From: clara.smith@email.com</small>
+              <span class="badge bg-primary rounded-pill">1</span>
+            </div>
+          </button>
+
+          <!-- Ticket Item 3 -->
+          <button class="list-group-item list-group-item-action p-3 mb-2 border rounded shadow-sm" 
+                  id="ticket3-tab" data-bs-toggle="pill" data-bs-target="#ticket3" type="button" role="tab" aria-selected="false"
+                  data-status="closed" data-search="feature request export csv button">
+            <div class="d-flex w-100 justify-between align-items-center mb-1">
+              <h6 class="mb-0 fw-bold text-truncate me-2">Feature Request: Export to CSV button</h6>
+              <span class="badge bg-secondary">Low</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <small class="text-muted text-truncate">From: dev.team@internal.com</small>
+              <span class="badge bg-secondary rounded-pill">0</span>
+            </div>
+          </button>
+
+        </div>
+
+        <!-- Empty State UI -->
+        <div id="emptyState" class="text-center py-5 d-none">
+          <i class="bi bi-search text-muted display-4"></i>
+          <p class="text-muted mt-2">No tickets match your filters.</p>
+        </div>
+
+      </div>
+
+      <!-- RIGHT PANE: Conversation Detail Thread -->
+      <div class="col-12 col-md-8 p-3 bg-light d-flex flex-column h-100 scrollable-panel">
+        <div class="tab-content h-100" id="ticketContent">
+          
+          <!-- Thread 1 Content -->
+          <div class="tab-pane fade show active h-100 d-flex flex-column" id="ticket1" role="tabpanel" aria-labelledby="ticket1-tab">
+            <!-- Header Metadata Section -->
+            <div class="card p-3 mb-3 border-0 shadow-sm">
+              <div class="row align-items-center">
+                <div class="col-md-7">
+                  <h5 class="fw-bold mb-1">Login issues on main dashboard</h5>
+                  <p class="text-muted small mb-0">Ticket ID: #1024 &bull; Assigned to: <strong>Agent Alex</strong></p>
+                </div>
+                <div class="col-md-5 d-flex gap-2 justify-content-md-end mt-2 mt-md-0">
+                  <select class="form-select form-select-sm w-auto border-danger fw-semibold text-danger bg-light" aria-label="Change Status">
+                    <option value="open" selected>🔴 Open</option>
+                    <option value="pending">🟡 Pending</option>
+                    <option value="closed">🟢 Closed</option>
+                  </select>
+                  <button class="btn btn-primary btn-sm px-3" data-bs-toggle="modal" data-bs-target="#replyModal">
+                    <i class="bi bi-reply-fill me-1"></i> Reply
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Message Thread Feed -->
+            <div class="flex-grow-1 overflow-auto pe-2 mb-3 d-flex flex-column gap-3" id="threadContainer1">
+              <!-- Customer message -->
+              <div class="d-flex align-items-start max-width-75">
+                <div class="bg-white p-3 rounded shadow-sm border">
+                  <div class="d-flex justify-content-between mb-1">
+                    <strong class="small text-dark me-4">John Doe (Customer)</strong>
+                    <small class="text-muted">10:15 AM</small>
+                  </div>
+                  <p class="mb-0 text-secondary">Hello, I cannot access the dashboard panel. It continuously keeps giving me a 500 error screen after typing my credentials. Please clear this up urgently.</p>
+                </div>
+              </div>
+              <!-- System Log / internal event status change -->
+              <div class="text-center my-1">
+                <span class="badge bg-light text-dark border small fw-normal">Ticket created and marked High Priority</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thread 2 Content -->
+          <div class="tab-pane fade h-100 d-flex flex-column" id="ticket2" role="tabpanel" aria-labelledby="ticket2-tab">
+            <div class="card p-3 mb-3 border-0 shadow-sm">
+              <div class="row align-items-center">
+                <div class="col-md-7">
+                  <h5 class="fw-bold mb-1">Billing discrepancy / Invoice refund</h5>
+                  <p class="text-muted small mb-0">Ticket ID: #1023 &bull; Assigned to: <strong>Unassigned</strong></p>
+                </div>
+                <div class="col-md-5 d-flex gap-2 justify-content-md-end mt-2 mt-md-0">
+                  <select class="form-select form-select-sm w-auto border-warning fw-semibold text-warning bg-light">
+</body>
+</html>
