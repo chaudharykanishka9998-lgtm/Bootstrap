@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseBoard</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="project 1.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row min-vh-100">
+      
+      <!-- ===== SIDEBAR NAV ===== -->
+      <nav class="col-md-3 col-lg-2 d-md-block bg-body-tertiary border-end p-3">
+        <div class="d-flex align-items-center justify-content-between mb-4 px-2">
+          <h5 class="m-0 fw-bold text-primary"><i class="bi bi-activity me-2"></i>PulseBoard</h5>
+          <div class="d-flex align-items-center gap-2">
+            <span class="pulse-dot" title="Live Syncing"></span>
+            <!-- Dark Mode Toggle -->
+            <button class="btn btn-sm btn-outline-secondary" id="themeToggle" title="Toggle Dark/Light Mode">
+              <i class="bi bi-sun-fill" id="themeIcon"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="list-group list-group-flush">
+          <a href="#" class="list-group-item list-group-item-action active"><i class="bi bi-speedometer2 me-2"></i>Overview</a>
+          <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-hdd-network me-2"></i>Services</a>
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-exclamation-triangle me-2"></i>Alerts</span>
+            <span class="badge bg-danger rounded-pill">2</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-file-earmark-text me-2"></i>Logs</a>
+          <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-gear me-2"></i>Settings</a>
+        </div>
+      </nav>
+
+      <!-- ===== MAIN CONTENT AREA ===== -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+        
+        <!-- Header Actions -->
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Infrastructure Monitor</h1>
+          <button class="btn btn-primary d-flex align-items-center gap-2" id="refreshBtn">
+            <span class="spinner-border spinner-border-sm d-none" id="btnSpinner" role="status"></span>
+            <i class="bi bi-arrow-clockwise" id="btnIcon"></i>
+            <span id="btnText">Refresh Data</span>
+          </button>
+        </div>
+
+        <!-- ===== METRIC CARDS (ROW 1) ===== -->
+        <div class="row g-3 mb-4" id="metricsContainer">
+          <!-- CPU Card -->
+          <div class="col-sm-6 col-xl-3">
+            <div class="card h-100">
+              <div class="card-body data-content">
+                <h6 class="card-subtitle mb-2 text-muted text-uppercase small">CPU Load</h6>
+                <h2 class="card-title fw-bold">42%</h2>
+                <div class="progress" role="progressbar">
+                  <div class="progress-bar bg-success" style="width: 42%"></div>
+                </div>
+              </div>
+              <div class="card-body skeleton-content d-none">
+                <div class="skeleton skeleton-text mb-2 w-50"></div>
+                <div class="skeleton skeleton-title mb-3"></div>
+                <div class="skeleton skeleton-progress"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Memory Card -->
+          <div class="col-sm-6 col-xl-3">
+            <div class="card h-100">
+              <div class="card-body data-content">
+                <h6 class="card-subtitle mb-2 text-muted text-uppercase small">Memory Usage</h6>
+                <h2 class="card-title fw-bold">78%</h2>
+                <div class="progress" role="progressbar">
+                  <div class="progress-bar bg-warning" style="width: 78%"></div>
+                </div>
+              </div>
+              <div class="card-body skeleton-content d-none">
+                <div class="skeleton skeleton-text mb-2 w-50"></div>
+                <div class="skeleton skeleton-title mb-3"></div>
+                <div class="skeleton skeleton-progress"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Disk Card -->
+          <div class="col-sm-6 col-xl-3">
+            <div class="card h-100">
+              <div class="card-body data-content">
+                <h6 class="card-subtitle mb-2 text-muted text-uppercase small">Disk I/O</h6>
+                <h2 class="card-title fw-bold">89%</h2>
+                <div class="progress" role="progressbar">
+                  <div class="progress-bar bg-danger" style="width: 89%"></div>
+                </div>
+              </div>
+              <div class="card-body skeleton-content d-none">
+                <div class="skeleton skeleton-text mb-2 w-50"></div>
+                <div class="skeleton skeleton-title mb-3"></div>
+                <div class="skeleton skeleton-progress"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Network Card -->
+          <div class="col-sm-6 col-xl-3">
+            <div class="card h-100">
+              <div class="card-body data-content">
+                <h6 class="card-subtitle mb-2 text-muted text-uppercase small">Network In/Out</h6>
+                <h2 class="card-title fw-bold">15%</h2>
+                <div class="progress" role="progressbar">
+                  <div class="progress-bar bg-success" style="width: 15%"></div>
+                </div>
+              </div>
+              <div class="card-body skeleton-content d-none">
+                <div class="skeleton skeleton-text mb-2 w-50"></div>
+                <div class="skeleton skeleton-title mb-3"></div>
+                <div class="skeleton skeleton-progress"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== SERVICES LIST (ROW 2) ===== -->
+        <div class="card">
+          <div class="card-header bg-transparent py-3">
+            <h5 class="mb-0 fw-bold">Active Managed Services</h5>
+          </div>
+          <!-- Live Service Table Rows -->
+          <div class="list-group list-group-flush" id="servicesList">
+            
+            <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between py-3 service-row" style="cursor: pointer;" data-name="Web Gateway" data-host="ip-10-0-1-45" data-time="12ms" data-status="Operational" data-badge="bg-success">
+              <div class="data-content row w-100 align-items-center">
+                <div class="col-md-4 fw-semibold text-body">Web Gateway</div>
+                <div class="col-md-3 text-muted font-monospace small">ip-10-0-1-45</div>
+                <div class="col-md-3 text-muted">Resp Time: 12ms</div>
+                <div class="col-md-2 text-md-end mt-2 mt-md-0">
+                  <span class="badge bg-success">Operational</span>
+                </div>
+              </div>
+              <div class="skeleton-content row w-100 d-none">
+                <div class="col-4"><div class="skeleton skeleton-text"></div></div>
+                <div class="col-3"><div class="skeleton skeleton-text"></div></div>
+                <div class="col-3"><div class="skeleton skeleton-text"></div></div>
+                <div class="col-2 text-end"><div class="skeleton skeleton-text w-75"></div></div>
+              </div>
+            </div>
+
+            <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between py-3 service-row" style="cursor: pointer;" data-name="Auth API Cluster" data-host="ip-10-0-2-11" data-time="340ms" data-status="Degraded" data-badge="bg-warning text-dark">
+              <div class="data-content row w-100 align-items-center">
+                <div class="col-md-4 fw-semibold text-body">Auth API Cluster</div>
+                <div class="col-md-3 text-muted font-monospace small">ip-10-0-2-11</div>
+                <div class="col-md-3 text-muted">Resp Time: 340ms</div>
+                <div class="col-md-2 text-md-end mt-2 mt-md-0">
+                  <span class="badge bg-warning text-dark">Degraded</span>
+                </div>
+              </div>
+              <div class="skeleton-content row w-100 d-none">
+                <div class="col-4"><div class="skeleton skeleton-text"></div></div>
+</body>
+</html>
